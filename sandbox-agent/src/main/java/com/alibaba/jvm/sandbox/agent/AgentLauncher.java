@@ -284,6 +284,8 @@ public class AgentLauncher {
 
     private static final String KEY_PROPERTIES_FILE_PATH = "prop";
 
+    private static final String TASK_CONFIG = "task.config";
+
     private static boolean isNotBlankString(final String string) {
         return null != string
                 && string.length() > 0
@@ -363,6 +365,11 @@ public class AgentLauncher {
     // 获取TOKEN
     private static String getToken(final Map<String, String> featureMap) {
         return getDefault(featureMap, KEY_TOKEN, DEFAULT_TOKEN);
+    }
+
+
+    private static String getTaskConfig(Map<String, String> featureMap) {
+        return getDefault(featureMap, TASK_CONFIG , "");
     }
 
     // 获取容器配置文件路径

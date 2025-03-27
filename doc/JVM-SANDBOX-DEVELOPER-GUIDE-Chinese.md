@@ -253,7 +253,7 @@ public class BrokenClockTinkerModule implements Module {
                 <executions>
                     <execution>
                         <goals>
-                            <goal>attached</goal>
+                            <goal>single</goal>
                         </goals>
                         <phase>package</phase>
                         <configuration>
