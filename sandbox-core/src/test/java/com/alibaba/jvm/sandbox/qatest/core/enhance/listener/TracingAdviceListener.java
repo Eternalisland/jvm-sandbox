@@ -5,6 +5,7 @@ import com.alibaba.jvm.sandbox.api.listener.ext.Advice;
 import com.alibaba.jvm.sandbox.api.listener.ext.AdviceListener;
 import com.alibaba.jvm.sandbox.core.enhance.weaver.EventListenerHandler;
 import com.alibaba.jvm.sandbox.core.util.ObjectIDs;
+import org.apache.commons.lang3.StringUtils;
 import org.objectweb.asm.Type;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import static com.alibaba.jvm.sandbox.api.util.GaStringUtils.getJavaClassName;
 import static com.alibaba.jvm.sandbox.api.util.GaStringUtils.getJavaClassNameArray;
 import static com.alibaba.jvm.sandbox.core.util.SandboxStringUtils.toJavaClassNameArray;
 import static com.alibaba.jvm.sandbox.qatest.core.util.AssertUtils.assertArrayEquals;
-import static com.sun.tools.javac.util.StringUtils.toUpperCase;
+//import static com.sun.tools.javac.util.StringUtils.toUpperCase;
 import static org.apache.commons.lang3.StringUtils.join;
 
 public class TracingAdviceListener extends AdviceListener {
@@ -35,7 +36,7 @@ public class TracingAdviceListener extends AdviceListener {
                 javaClassName,
                 javaMethodName,
                 join(parameterTypes, ","),
-                toUpperCase(Boolean.toString(isTop))
+                StringUtils.upperCase(Boolean.toString(isTop))
         );
     }
 
@@ -54,7 +55,7 @@ public class TracingAdviceListener extends AdviceListener {
                 javaClassName,
                 javaMethodName,
                 join(parameterTypes, ","),
-                toUpperCase(Boolean.toString(isTop)),
+                StringUtils.upperCase(Boolean.toString(isTop)),
                 callLineNum,
                 callJavaClassName,
                 callJavaMethodName,
@@ -78,7 +79,7 @@ public class TracingAdviceListener extends AdviceListener {
                 javaClassName,
                 javaMethodName,
                 join(parameterTypes, ","),
-                toUpperCase(Boolean.toString(isTop)),
+                StringUtils.upperCase(Boolean.toString(isTop)),
                 callLineNum,
                 callJavaClassName,
                 callJavaMethodName,
@@ -99,7 +100,7 @@ public class TracingAdviceListener extends AdviceListener {
                 javaClassName,
                 javaMethodName,
                 join(parameterTypes, ","),
-                toUpperCase(Boolean.toString(isTop)),
+                StringUtils.upperCase(Boolean.toString(isTop)),
                 lineNum
         );
     }
