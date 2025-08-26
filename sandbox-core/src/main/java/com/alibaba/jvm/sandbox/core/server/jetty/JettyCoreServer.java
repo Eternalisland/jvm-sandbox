@@ -4,15 +4,13 @@ import com.alibaba.jvm.sandbox.core.CoreConfigure;
 import com.alibaba.jvm.sandbox.core.JvmSandbox;
 import com.alibaba.jvm.sandbox.core.server.CoreServer;
 import com.alibaba.jvm.sandbox.core.server.jetty.servlet.ModuleHttpServlet;
-import com.alibaba.jvm.sandbox.core.server.jetty.servlet.WebSocketAcceptorServlet;
 import com.alibaba.jvm.sandbox.core.util.Initializer;
 import com.alibaba.jvm.sandbox.core.util.LogbackUtils;
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
+import org.eclipse.jetty.ee10.servlet.ServletHolder;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.eclipse.jetty.server.ServerConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +21,6 @@ import java.net.InetSocketAddress;
 
 import static com.alibaba.jvm.sandbox.core.util.NetworkUtils.isPortInUsing;
 import static java.lang.String.format;
-import static org.eclipse.jetty.servlet.ServletContextHandler.NO_SESSIONS;
 
 /**
  * Jetty实现的Http服务器
@@ -94,12 +91,12 @@ public class JettyCoreServer implements CoreServer {
             throw new IOException("server was not bind yet.");
         }
 
-        SelectChannelConnector scc = null;
+        ServerConnector scc = null;
         final Connector[] connectorArray = httpServer.getConnectors();
         if (null != connectorArray) {
             for (final Connector connector : connectorArray) {
-                if (connector instanceof SelectChannelConnector) {
-                    scc = (SelectChannelConnector) connector;
+                if (connector instanceof ServerConnector) {
+                    scc = (ServerConnector) connector;
                     break;
                 }//if
             }//for
@@ -120,21 +117,21 @@ public class JettyCoreServer implements CoreServer {
      */
     private void initJettyContextHandler() {
         final String namespace = cfg.getNamespace();
-        final ServletContextHandler context = new ServletContextHandler(NO_SESSIONS);
-
         final String contextPath = "/sandbox/" + namespace;
+        final ServletContextHandler context = new ServletContextHandler(contextPath);
+
+
         context.setContextPath(contextPath);
         context.setClassLoader(getClass().getClassLoader());
 
         // web-socket-servlet
-        final String wsPathSpec = "/module/websocket/*";
-        logger.info("initializing ws-http-handler. path={}", contextPath + wsPathSpec);
-        //noinspection deprecation
-        context.addServlet(
-                new ServletHolder(new WebSocketAcceptorServlet(jvmSandbox.getCoreModuleManager())),
-                wsPathSpec
-        );
-
+//        final String wsPathSpec = "/module/websocket/*";
+//        logger.info("initializing ws-http-handler. path={}", contextPath + wsPathSpec);
+//        //noinspection deprecation
+//        context.addServlet(
+//                new ServletHolder(new WebSocketAcceptorServlet(jvmSandbox.getCoreModuleManager())),
+//                wsPathSpec
+//        );
         // module-http-servlet
         final String pathSpec = "/module/http/*";
         logger.info("initializing http-handler. path={}", contextPath + pathSpec);
@@ -161,13 +158,22 @@ public class JettyCoreServer implements CoreServer {
                     serverPort
             ));
         }
-
+        // Jetty 11+ 默认会自动创建 QueuedThreadPool，无需手动配置：
         httpServer = new Server(new InetSocketAddress(serverIp, serverPort));
-        QueuedThreadPool qtp = new QueuedThreadPool();
+//        QueuedThreadPool qtp = new QueuedThreadPool();
         // jetty线程设置为daemon，防止应用启动失败进程无法正常退出
-        qtp.setDaemon(true);
-        qtp.setName("sandbox-jetty-qtp-" + qtp.hashCode());
-        httpServer.setThreadPool(qtp);
+//        qtp.setDaemon(true);
+//        qtp.setName("sandbox-jetty-qtp-" + qtp.hashCode());
+
+//        httpServer.setThreadPool(qtp);
+
+        // 创建 Server 并配置线程池
+//        QueuedThreadPool threadPool = new QueuedThreadPool();
+//        threadPool.setMinThreads(10);     // 最小线程数
+//        threadPool.setMaxThreads(200);    // 最大线程数
+//        threadPool.setIdleTimeout(60000); // 空闲线程超时（ms）
+//
+//        Server server = new Server(threadPool); // 传入自定义线程池
     }
 
     @Override

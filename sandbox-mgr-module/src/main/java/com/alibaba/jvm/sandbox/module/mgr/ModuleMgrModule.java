@@ -5,6 +5,7 @@ import com.alibaba.jvm.sandbox.api.Module;
 import com.alibaba.jvm.sandbox.api.ModuleException;
 import com.alibaba.jvm.sandbox.api.annotation.Command;
 import com.alibaba.jvm.sandbox.api.resource.ModuleManager;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +14,6 @@ import org.kohsuke.MetaInfServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;

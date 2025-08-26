@@ -1,56 +1,57 @@
 package com.alibaba.jvm.sandbox.qatest.api.util;
 
 import com.alibaba.jvm.sandbox.api.util.GaStringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 public class GaStringUtilsTests {
 
     @Test
     public void testGetJavaClassName() {
-        Assert.assertEquals("java.lang.String",
+        Assertions.assertEquals("java.lang.String",
                 GaStringUtils.getJavaClassName(String.class));
     }
 
     @Test
     public void testGetJavaClassNameArray() {
-        Assert.assertNull(GaStringUtils.getJavaClassNameArray(null));
-        Assert.assertNull(GaStringUtils.getJavaClassNameArray(new Class[]{}));
+        Assertions.assertNull(GaStringUtils.getJavaClassNameArray(null));
+        Assertions.assertNull(GaStringUtils.getJavaClassNameArray(new Class[]{}));
 
         Class[] classes = new Class[]{String.class, Integer.class};
         String[] strings =
                 new String[]{"java.lang.String", "java.lang.Integer"};
 
-        Assert.assertArrayEquals(strings,
+        Assertions.assertArrayEquals(strings,
                 GaStringUtils.getJavaClassNameArray(classes));
     }
 
     @Test
     public void testIsEmpty() {
-        Assert.assertTrue(GaStringUtils.isEmpty(""));
-        Assert.assertTrue(GaStringUtils.isEmpty(null));
+        Assertions.assertTrue(GaStringUtils.isEmpty(""));
+        Assertions.assertTrue(GaStringUtils.isEmpty(null));
 
-        Assert.assertFalse(GaStringUtils.isEmpty("foo"));
+        Assertions.assertFalse(GaStringUtils.isEmpty("foo"));
     }
 
     @Test
     public void testMatching() {
-        Assert.assertFalse(GaStringUtils.matching(null, "bar"));
-        Assert.assertFalse(GaStringUtils.matching("foo", null));
-        Assert.assertFalse(GaStringUtils.matching(null, null));
-        Assert.assertFalse(GaStringUtils.matching("foo", "bar"));
-        Assert.assertFalse(GaStringUtils.matching("foobar", "foo"));
-        Assert.assertFalse(GaStringUtils.matching("foobar", "*a"));
-        Assert.assertFalse(GaStringUtils.matching("foo", "\\o"));
-        Assert.assertFalse(GaStringUtils.matching("foo", "\\*"));
-        Assert.assertFalse(GaStringUtils.matching("foo", "f\\?o"));
-        Assert.assertFalse(GaStringUtils.matching("fooMatching", "fool\\*ing"));
+        Assertions.assertFalse(GaStringUtils.matching(null, "bar"));
+        Assertions.assertFalse(GaStringUtils.matching("foo", null));
+        Assertions.assertFalse(GaStringUtils.matching(null, null));
+        Assertions.assertFalse(GaStringUtils.matching("foo", "bar"));
+        Assertions.assertFalse(GaStringUtils.matching("foobar", "foo"));
+        Assertions.assertFalse(GaStringUtils.matching("foobar", "*a"));
+        Assertions.assertFalse(GaStringUtils.matching("foo", "\\o"));
+        Assertions.assertFalse(GaStringUtils.matching("foo", "\\*"));
+        Assertions.assertFalse(GaStringUtils.matching("foo", "f\\?o"));
+        Assertions.assertFalse(GaStringUtils.matching("fooMatching", "fool\\*ing"));
 
-        Assert.assertTrue(GaStringUtils.matching("foo", "*"));
-        Assert.assertTrue(GaStringUtils.matching("foo", "?oo"));
-        Assert.assertTrue(GaStringUtils.matching("foo", "**o"));
-        Assert.assertTrue(GaStringUtils.matching("foo", "f?o"));
-        Assert.assertTrue(GaStringUtils.matching("fooMatching", "foo*"));
-        Assert.assertTrue(GaStringUtils.matching("fooMatching", "foo*ing"));
+        Assertions.assertTrue(GaStringUtils.matching("foo", "*"));
+        Assertions.assertTrue(GaStringUtils.matching("foo", "?oo"));
+        Assertions.assertTrue(GaStringUtils.matching("foo", "**o"));
+        Assertions.assertTrue(GaStringUtils.matching("foo", "f?o"));
+        Assertions.assertTrue(GaStringUtils.matching("fooMatching", "foo*"));
+        Assertions.assertTrue(GaStringUtils.matching("fooMatching", "foo*ing"));
     }
 }

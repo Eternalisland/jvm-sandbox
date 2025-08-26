@@ -7,8 +7,9 @@ import com.alibaba.jvm.sandbox.api.listener.ext.AdviceListener;
 import com.alibaba.jvm.sandbox.api.listener.ext.EventWatchBuilder;
 import com.alibaba.jvm.sandbox.qatest.api.mock.MockForBuilderModuleEventWatcher;
 import com.alibaba.jvm.sandbox.qatest.api.util.ApiQaArrayUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 import static com.alibaba.jvm.sandbox.api.listener.ext.EventWatchBuilder.PatternType.REGEX;
 
@@ -24,13 +25,13 @@ public class EventWatchBuilderTestCase {
                 .onBehavior("toString")
                 .onWatch(new AdviceListener());
 
-        Assert.assertEquals(5, mockForBuilderModuleEventWatcher.getEventTypeArray().length);
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertEquals(1, mockForBuilderModuleEventWatcher.getEventWatchCondition().getOrFilterArray().length);
+        Assertions.assertEquals(5, mockForBuilderModuleEventWatcher.getEventTypeArray().length);
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertEquals(1, mockForBuilderModuleEventWatcher.getEventWatchCondition().getOrFilterArray().length);
     }
 
     @Test
@@ -46,17 +47,17 @@ public class EventWatchBuilderTestCase {
                 .withLine()
                 .onWatch(new AdviceListener());
 
-        Assert.assertEquals(9, mockForBuilderModuleEventWatcher.getEventTypeArray().length);
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.LINE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertEquals(1, mockForBuilderModuleEventWatcher.getEventWatchCondition().getOrFilterArray().length);
+        Assertions.assertEquals(9, mockForBuilderModuleEventWatcher.getEventTypeArray().length);
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.LINE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertEquals(1, mockForBuilderModuleEventWatcher.getEventWatchCondition().getOrFilterArray().length);
     }
 
     @Test
@@ -71,16 +72,16 @@ public class EventWatchBuilderTestCase {
                 .withCall()
                 .onWatch(new AdviceListener());
 
-        Assert.assertEquals(8, mockForBuilderModuleEventWatcher.getEventTypeArray().length);
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertFalse(ApiQaArrayUtils.has(Event.Type.LINE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertEquals(8, mockForBuilderModuleEventWatcher.getEventTypeArray().length);
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.CALL_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertFalse(ApiQaArrayUtils.has(Event.Type.LINE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
 
     }
 
@@ -96,16 +97,16 @@ public class EventWatchBuilderTestCase {
                 .withLine()
                 .onWatch(new AdviceListener());
 
-        Assert.assertEquals(6, mockForBuilderModuleEventWatcher.getEventTypeArray().length);
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertFalse(ApiQaArrayUtils.has(Event.Type.CALL_BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertFalse(ApiQaArrayUtils.has(Event.Type.CALL_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertFalse(ApiQaArrayUtils.has(Event.Type.CALL_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.LINE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
-        Assert.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertEquals(6, mockForBuilderModuleEventWatcher.getEventTypeArray().length);
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertFalse(ApiQaArrayUtils.has(Event.Type.CALL_BEFORE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertFalse(ApiQaArrayUtils.has(Event.Type.CALL_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertFalse(ApiQaArrayUtils.has(Event.Type.CALL_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.LINE, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_RETURN, mockForBuilderModuleEventWatcher.getEventTypeArray()));
+        Assertions.assertTrue(ApiQaArrayUtils.has(Event.Type.IMMEDIATELY_THROWS, mockForBuilderModuleEventWatcher.getEventTypeArray()));
 
     }
 
@@ -121,9 +122,9 @@ public class EventWatchBuilderTestCase {
                 .hasAnnotationTypes(".*Override")
                 .hasExceptionTypes(".*Exception")
                 .onWatch(new AdviceListener());
-        Assert.assertEquals(1, mockForBuilderModuleEventWatcher.getEventWatchCondition().getOrFilterArray().length);
+        Assertions.assertEquals(1, mockForBuilderModuleEventWatcher.getEventWatchCondition().getOrFilterArray().length);
         final Filter filter = mockForBuilderModuleEventWatcher.getEventWatchCondition().getOrFilterArray()[0];
-        Assert.assertTrue(filter.doClassFilter(
+        Assertions.assertTrue(filter.doClassFilter(
                 AccessFlags.ACF_PUBLIC,
                 String.class.getName(),
                 null,
@@ -131,7 +132,7 @@ public class EventWatchBuilderTestCase {
                 null
         ));
 
-        Assert.assertFalse(filter.doClassFilter(
+        Assertions.assertFalse(filter.doClassFilter(
                 AccessFlags.ACF_PUBLIC,
                 Integer.class.getName(),
                 null,
@@ -139,7 +140,7 @@ public class EventWatchBuilderTestCase {
                 null
         ));
 
-        Assert.assertTrue(filter.doMethodFilter(
+        Assertions.assertTrue(filter.doMethodFilter(
                 AccessFlags.ACF_PUBLIC,
                 "<init>",
                 new String[]{byte[].class.getCanonicalName()},
@@ -147,7 +148,7 @@ public class EventWatchBuilderTestCase {
                 new String[]{Override.class.getName()}
         ));
 
-        Assert.assertFalse(filter.doMethodFilter(
+        Assertions.assertFalse(filter.doMethodFilter(
                 AccessFlags.ACF_PUBLIC,
                 "<cinit>",
                 null,
@@ -155,7 +156,7 @@ public class EventWatchBuilderTestCase {
                 null
         ));
 
-        Assert.assertFalse(filter.doMethodFilter(
+        Assertions.assertFalse(filter.doMethodFilter(
                 AccessFlags.ACF_PUBLIC,
                 "<init>",
                 new String[]{short[].class.getCanonicalName()},
@@ -163,7 +164,7 @@ public class EventWatchBuilderTestCase {
                 null
         ));
 
-        Assert.assertFalse(filter.doMethodFilter(
+        Assertions.assertFalse(filter.doMethodFilter(
                 AccessFlags.ACF_PUBLIC,
                 "<init>",
                 new String[]{byte[].class.getCanonicalName()},

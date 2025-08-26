@@ -14,7 +14,7 @@ exit_on_err()
 }
 
 # maven package the sandbox
-mvn clean cobertura:cobertura package -Dmaven.test.skip=false -f ../pom.xml \
+mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -Dmaven.test.skip=false -f ../pom.xml \
     || exit_on_err 1 "package sandbox failed."
 
 # reset the target dir

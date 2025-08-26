@@ -7,8 +7,9 @@ import com.alibaba.jvm.sandbox.api.listener.ext.Advice;
 import com.alibaba.jvm.sandbox.api.listener.ext.AdviceListener;
 import com.alibaba.jvm.sandbox.api.listener.ext.EventWatchBuilder;
 import com.alibaba.jvm.sandbox.qatest.api.mock.MockForBuilderModuleEventWatcher;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 
 public class AdviceListenerTestCase {
 
@@ -62,7 +63,7 @@ public class AdviceListenerTestCase {
                     )
             );
 
-            Assert.assertEquals("before;afterReturning;", traceSB.toString());
+            Assertions.assertEquals("before;afterReturning;", traceSB.toString());
             traceSB.delete(0, traceSB.length());
 
         }
@@ -89,7 +90,7 @@ public class AdviceListenerTestCase {
                     )
             );
 
-            Assert.assertEquals("before;afterThrowing;", traceSB.toString());
+            Assertions.assertEquals("before;afterThrowing;", traceSB.toString());
             traceSB.delete(0, traceSB.length());
 
         }
