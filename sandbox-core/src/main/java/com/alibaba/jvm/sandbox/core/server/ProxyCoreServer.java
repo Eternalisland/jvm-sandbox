@@ -1,7 +1,7 @@
 package com.alibaba.jvm.sandbox.core.server;
 
 import com.alibaba.jvm.sandbox.core.CoreConfigure;
-import com.alibaba.jvm.sandbox.core.server.jetty.JettyCoreServer;
+import com.alibaba.jvm.sandbox.core.server.netty.NettyCoreServer;
 
 import java.io.IOException;
 import java.lang.instrument.Instrumentation;
@@ -9,8 +9,14 @@ import java.net.InetSocketAddress;
 
 public class ProxyCoreServer implements CoreServer {
 
+    /*
+     * 2026-09 transport migration:
+     * Keep the CoreServer facade stable and switch only the concrete HTTP transport. This preserves
+     * every existing caller of ProxyCoreServer while ensuring Jetty is no longer loaded into target JVMs.
+     * TransportMigrationGuardTest verifies this delegate remains Netty and Jetty classes stay absent.
+     */
     private final static Class<? extends CoreServer> classOfCoreServerImpl
-            = JettyCoreServer.class;
+            = NettyCoreServer.class;
 
     private final CoreServer proxy;
 

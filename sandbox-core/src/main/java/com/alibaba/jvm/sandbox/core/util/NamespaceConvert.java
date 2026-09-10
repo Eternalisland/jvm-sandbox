@@ -25,7 +25,12 @@ public class NamespaceConvert extends ClassicConverter {
      */
     public static void initNamespaceConvert(final String namespace) {
         NamespaceConvert.namespace = namespace;
-        PatternLayout.defaultConverterMap.put("SANDBOX_NAMESPACE", NamespaceConvert.class.getName());
+        /*
+         * DEPENDENCY-UPGRADE FIX (Logback 1.2.x -> 1.6.x): Logback replaced the legacy String-based
+         * defaultConverterMap with a Supplier-based registry. Register the converter through the supported
+         * 1.6 API so the existing %SANDBOX_NAMESPACE pattern keeps the same observable behavior.
+         */
+        PatternLayout.DEFAULT_CONVERTER_SUPPLIER_MAP.put("SANDBOX_NAMESPACE", NamespaceConvert::new);
     }
 
 }

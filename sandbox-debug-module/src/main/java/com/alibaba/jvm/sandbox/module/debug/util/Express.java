@@ -1,8 +1,12 @@
 package com.alibaba.jvm.sandbox.module.debug.util;
 
-import ognl.DefaultMemberAccess;
+import ognl.AbstractMemberAccess;
+import ognl.MemberAccess;
 import ognl.Ognl;
 import ognl.OgnlContext;
+
+import java.lang.reflect.Member;
+import java.lang.reflect.Modifier;
 
 /**
  * 表达式
@@ -104,13 +108,29 @@ public interface Express {
 
     class OgnlExpress implements Express {
 
+        /*
+         * DEPENDENCY-UPGRADE FIX (OGNL 3.0.8 -> 3.4.x): DefaultMemberAccess was removed from the
+         * production artifact. OGNL 3.4.x also tightened reflective property access, so the upgraded
+         * security baseline deliberately permits public members only instead of recreating unrestricted
+         * reflective access. This keeps normal watch expressions working without bypassing the hardening.
+         */
+        private static final MemberAccess WATCH_MEMBER_ACCESS = new AbstractMemberAccess() {
+            @Override
+            public boolean isAccessible(final OgnlContext context,
+                                        final Object target,
+                                        final Member member,
+                                        final String propertyName) {
+                return Modifier.isPublic(member.getModifiers());
+            }
+        };
+
         private Object bindObject;
-        private final OgnlContext context = new OgnlContext();
+        private final OgnlContext context = Ognl.createDefaultContext(null, WATCH_MEMBER_ACCESS);
 
         @Override
         public Object get(String express) throws ExpressException {
             try {
-                context.setMemberAccess(new DefaultMemberAccess(true));
+                // MemberAccess is fixed at context construction time in OGNL 3.4.x.
                 return Ognl.getValue(express, context, bindObject);
             } catch (Exception e) {
                 throw new ExpressException(express, e);
